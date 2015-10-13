@@ -1,7 +1,7 @@
 #include "mazeloader.h"
 #include "maze.h"
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdexcept>
 
 static const float MAZE_WALL_HEIGHT = 5.0f;

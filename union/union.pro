@@ -5,21 +5,11 @@
 #-------------------------------------------------
 
 include(union-flags.pri)
-
-INCLUDEPATH += /usr/local/include
-
-LIBS *= -lSDL -lGLEW -lGL  -lGLU -lopenal \
-        -lalut -lSDL_image -lassimp -lIL
-
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-10-23T20:42:01
-#
-#-------------------------------------------------
+LIBS *= -lSDL2 -lSDL2_image -lassimp
 
 QT       -= core gui
 
-TARGET = union
+TARGET = $$redirectOutput($$TARGET)
 TEMPLATE = lib
 
 DEFINES += UNION_LIBRARY

@@ -1,9 +1,9 @@
 #include "AppDelegate.h"
 #include <stdexcept>
 
-const char MODEL_TANK_PHOENIX_PATH[] = "lab7scene/phoenix_ugv.md2";
-const char MODEL_HELI_PATH[] = "lab7scene/helicopter.md2";
-const char MODEL_CAR_PATH[] = "lab7scene/car.md2";
+const char MODEL_TANK_PHOENIX_PATH[] = "../../Data/lab7scene/phoenix_ugv.md2";
+const char MODEL_HELI_PATH[] = "../../Data/lab7scene/helicopter.md2";
+const char MODEL_CAR_PATH[] = "../../Data/lab7scene/car.md2";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -88,8 +88,8 @@ void AppDelegate::didInitialized(const Window &window)
                            vec3d(0, 0, 1));
 
     try {
-        auto vert(GL::Shader::createFromFile("GLSL/pipeline/pipeline.vert", GL_VERTEX_SHADER));
-        auto frag(GL::Shader::createFromFile("GLSL/pipeline/pipeline.frag", GL_FRAGMENT_SHADER));
+        auto vert(GL::Shader::createFromFile("../../Data/GLSL/pipeline/pipeline.vert", GL_VERTEX_SHADER));
+        auto frag(GL::Shader::createFromFile("../../Data/GLSL/pipeline/pipeline.frag", GL_FRAGMENT_SHADER));
         d->m_prImprovedPipeline = GL::Program::fromShaders2(vert, frag);
         d->m_prImprovedPipeline.autorelease();
         loadModel0();

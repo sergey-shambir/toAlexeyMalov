@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <GL/glew.h>
 #include <AL/al.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 static const double FIELD_OF_VIEW = 60.0;
 

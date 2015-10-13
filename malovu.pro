@@ -6,5 +6,4 @@ SUBDIRS = union \
     lab5-2-surface \
     lab5-3-labirynth \
     lab7-1-animators \
-    lab9-filter \
-    dynamic2d_1
+    lab9-filter

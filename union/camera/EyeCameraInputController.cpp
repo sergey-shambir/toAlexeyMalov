@@ -1,9 +1,11 @@
 #include "EyeCameraInputController.h"
 #include "../events/KeyboardEvent.h"
 #include "../events/MouseMotionEvent.h"
+#include "../app/Window.h"
 
-EyeCameraInputController::EyeCameraInputController(GL::IFirstPersonCamera &reference, float cameraSpeed)
-    : m_cameraRef(reference)
+EyeCameraInputController::EyeCameraInputController(const Window &window, GL::IFirstPersonCamera &reference, float cameraSpeed)
+    : m_window(window)
+    , m_cameraRef(reference)
     , m_cameraSpeed(cameraSpeed)
 {
     m_cameraRef.setTrackingEnabled(true);
@@ -17,48 +19,70 @@ EyeCameraInputController::EyeCameraInputController(GL::IFirstPersonCamera &refer
 
 void EyeCameraInputController::pressedKey(const KeyboardEvent &ev)
 {
-    vec3d speed = m_cameraRef.speed();
     switch (ev.m_key)
     {
     case SDLK_w:
-        speed.x += m_cameraSpeed;
+        m_moveState.keyW = true;
         break;
     case SDLK_a:
-        speed.y += m_cameraSpeed;
+        m_moveState.keyA = true;
         break;
     case SDLK_d:
-        speed.y -= m_cameraSpeed;
+        m_moveState.keyD = true;
         break;
     case SDLK_s:
-        speed.x -= m_cameraSpeed;
+        m_moveState.keyS = true;
+        break;
+    case SDLK_UP:
+        m_moveState.forward = true;
+        break;
+    case SDLK_LEFT:
+        m_moveState.left = true;
+        break;
+    case SDLK_RIGHT:
+        m_moveState.right = true;
+        break;
+    case SDLK_DOWN:
+        m_moveState.backward = true;
         break;
     default:
         break;
     }
-    m_cameraRef.setSpeed(speed);
+    updateCameraSpeed();
 }
 
 void EyeCameraInputController::releasedKey(const KeyboardEvent &ev)
 {
-    vec3d speed = m_cameraRef.speed();
     switch (ev.m_key)
     {
     case SDLK_w:
-        speed.x -= m_cameraSpeed;
+        m_moveState.keyW = false;
         break;
     case SDLK_a:
-        speed.y -= m_cameraSpeed;
+        m_moveState.keyA = false;
         break;
     case SDLK_d:
-        speed.y += m_cameraSpeed;
+        m_moveState.keyD = false;
         break;
     case SDLK_s:
-        speed.x += m_cameraSpeed;
+        m_moveState.keyS = false;
+        break;
+    case SDLK_UP:
+        m_moveState.forward = false;
+        break;
+    case SDLK_LEFT:
+        m_moveState.left = false;
+        break;
+    case SDLK_RIGHT:
+        m_moveState.right = false;
+        break;
+    case SDLK_DOWN:
+        m_moveState.backward = false;
         break;
     default:
         break;
     }
-    m_cameraRef.setSpeed(speed);
+    updateCameraSpeed();
 }
 
 void EyeCameraInputController::movedMouse(const MouseMotionEvent &ev)
@@ -81,7 +105,7 @@ void EyeCameraInputController::safeWarpMouse()
         m_cameraRef.getViewport(center.first, center.second);
         center.first /= 2;
         center.second /= 2;
-        SDL_WarpMouse(center.first, center.second);
+        m_window.warpMouse(center.first, center.second);
 
         std::pair<int, int> delta;
         SDL_GetMouseState(&delta.first, &delta.second);
@@ -89,6 +113,21 @@ void EyeCameraInputController::safeWarpMouse()
         delta.second = center.second - delta.second;
         m_blacklistedMoves.insert(delta);
     }
+}
+
+void EyeCameraInputController::updateCameraSpeed()
+{
+    vec3d speed(0, 0, 0);
+    if (m_moveState.forward || m_moveState.keyW) {
+        speed.x = +m_cameraSpeed;
+    } else if (m_moveState.backward || m_moveState.keyS) {
+        speed.x = -m_cameraSpeed;
+    } else if (m_moveState.left || m_moveState.keyA) {
+        speed.y = +m_cameraSpeed;
+    } else if (m_moveState.right || m_moveState.keyD) {
+        speed.y = -m_cameraSpeed;
+    }
+    m_cameraRef.setSpeed(speed);
 }
 
 

@@ -1,7 +1,7 @@
 #include "AppDelegate.h"
 #include <GL/glew.h>
 
-#include <SDL/SDL_mouse.h>
+#include <SDL2/SDL_mouse.h>
 
 static const float CAMERA_SPEED = 5.0f;
 

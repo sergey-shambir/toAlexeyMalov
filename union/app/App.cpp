@@ -7,9 +7,11 @@
 
 #include <assert.h>
 #include <GL/glew.h>
-#include <SDL/SDL.h>
-#include <AL/alut.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
 #include <IL/il.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 #include <stdio.h>
 
 static const char WORKDIR[] = "../../toAlexeyMalov/Data/";
@@ -99,11 +101,13 @@ void App::exec(int argc, char *argv[])
     }
 #endif
 
-    initLibs(argc, argv);
-    initGLContext();
-    initGLEW();
-    initUpdateTimer();
-    mainLoop();
+    if (initLibs(argc, argv))
+    {
+        initGLContext();
+        initGLEW();
+        initUpdateTimer();
+        mainLoop();
+    }
 }
 
 void App::unlockRedisplay()
@@ -116,22 +120,24 @@ void App::unlockRedisplay()
     }
 }
 
-void App::initLibs(int argc, char *argv[])
+bool App::initLibs(int argc, char *argv[])
 {
-    if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_NOPARACHUTE | SDL_INIT_EVENTTHREAD))
+    (void)argc;
+    (void)argv;
+    if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_NOPARACHUTE))
     {
         puts(SDL_GetError());
-        return;
+        return false;
     }
+
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     d->updateTime();
 
     ilInit();
-    alutInit(&argc, argv);
-    if (alGetError() != AL_NO_ERROR)
-    {
-        puts("Audio initialization error: alutInit() failed");
-        exit(1);
-    }
+    return true;
 }
 
 void App::initGLContext()
@@ -148,6 +154,7 @@ void App::initGLContext()
             float deltaTime = 0.001f * d->updateTime();
             d->delegate->willRedisplay(window, deltaTime);
         });
+    d->window.createWindow();
 }
 
 void App::initGLEW()
@@ -193,7 +200,7 @@ void App::mainLoop()
     // first frame
     {
         d->window.redisplay();
-        SDL_GL_SwapBuffers();
+        d->window.swapBuffers();
     }
 
     bool wantsQuit = false;
@@ -205,7 +212,7 @@ void App::mainLoop()
             break;
 
         case SDL_KEYDOWN: {
-            SDL_keysym sym = event.key.keysym;
+            SDL_Keysym sym = event.key.keysym;
             if (sym.sym == SDLK_F4 && ((sym.mod | KMOD_LALT) || (sym.mod | KMOD_RALT)))
             {
                 wantsQuit = true;
@@ -218,7 +225,7 @@ void App::mainLoop()
             break;
 
         case SDL_KEYUP: {
-            SDL_keysym sym = event.key.keysym;
+            SDL_Keysym sym = event.key.keysym;
             if (sym.sym == SDLK_ESCAPE) {
                 wantsQuit = true;
             }
@@ -236,14 +243,15 @@ void App::mainLoop()
         }
             break;
 
-        case SDL_ACTIVEEVENT: {
-            SDL_ActiveEvent ev = event.active;
-            if (ev.gain) {
+        case SDL_WINDOWEVENT: {
+            SDL_WindowEvent ev = event.window;
+            if (ev.event == SDL_WINDOWEVENT_EXPOSED) {
                 bool needRedisplay = d->delegate->didBecomeActive(d->window);
                 if (needRedisplay)
                     postRedisplayByInput();
-            } else
+            } else if (ev.event == SDL_WINDOWEVENT_HIDDEN) {
                 d->delegate->didBecomeInactive(d->window);
+            }
         }
             break;
 
@@ -288,7 +296,7 @@ void App::mainLoop()
         case SDL_USEREVENT:
             if (event.user.code == UserEvents::EVENT_REDISPLAY) {
                 d->window.redisplay();
-                SDL_GL_SwapBuffers();
+                d->window.swapBuffers();
             }
             break;
         }

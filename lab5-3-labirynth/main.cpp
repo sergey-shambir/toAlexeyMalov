@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    std::string pathToImage = "../../toAlexeyMalov/Data/maze/default.png";
+    std::string pathToImage = "../../Data/maze/default.png";
     if (argc > 2) {
         cout << "Usage:\n"
                 "  ./program <path-to-image-with-maze>\n"

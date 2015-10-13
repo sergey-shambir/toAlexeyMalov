@@ -184,13 +184,13 @@ void AppDelegate::didInitialized(const Window &window)
     fpCamera->setDelegate(d->m_camDelegate.get());
 
     try {
-        d->m_texWalls[0] = GL::Texture2D::createFromImageByPath("maze/wall1.png");
-        d->m_texWalls[1] = GL::Texture2D::createFromImageByPath("maze/wall2.png");
-        d->m_texWalls[2] = GL::Texture2D::createFromImageByPath("maze/wall3.jpeg");
-        d->m_texWalls[3] = GL::Texture2D::createFromImageByPath("maze/wall4.jpeg");
+        d->m_texWalls[0] = GL::Texture2D::createFromImageByPath("../../Data/maze/wall1.png");
+        d->m_texWalls[1] = GL::Texture2D::createFromImageByPath("../../Data/maze/wall2.png");
+        d->m_texWalls[2] = GL::Texture2D::createFromImageByPath("../../Data/maze/wall3.jpeg");
+        d->m_texWalls[3] = GL::Texture2D::createFromImageByPath("../../Data/maze/wall4.jpeg");
 
-        auto vert(GL::Shader::createFromFile("GLSL/pipeline/pipeline.vert", GL_VERTEX_SHADER));
-        auto frag(GL::Shader::createFromFile("GLSL/pipeline/pipeline.frag", GL_FRAGMENT_SHADER));
+        auto vert(GL::Shader::createFromFile("../../Data/GLSL/pipeline/pipeline.vert", GL_VERTEX_SHADER));
+        auto frag(GL::Shader::createFromFile("../../Data/GLSL/pipeline/pipeline.frag", GL_FRAGMENT_SHADER));
         d->m_prImprovedPipeline = GL::Program::fromShaders2(vert, frag);
         d->m_prImprovedPipeline.autorelease();
     } catch (const std::runtime_error &ex) {

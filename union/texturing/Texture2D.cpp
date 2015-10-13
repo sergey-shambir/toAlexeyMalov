@@ -3,8 +3,8 @@
 #include "../helpers/ResourceHeap.h"
 #include <GL/glew.h>
 #include <IL/il.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdexcept>
 
 namespace GL {

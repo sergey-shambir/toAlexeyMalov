@@ -19,7 +19,7 @@ public:
     ~App();
 
     /**
-     * Initializes OpenGL (SDL+GLEW) and OpenAL (alut).
+     * Initializes OpenGL (SDL+GLEW) and DevIL
      * Starts main events loop.
      */
     void exec(int argc, char *argv[]);
@@ -31,7 +31,7 @@ protected:
     void unlockRedisplay();
 
 private:
-    void initLibs(int argc, char *argv[]);
+    bool initLibs(int argc, char *argv[]);
     void initGLContext();
     void initGLEW();
     void initUpdateTimer();

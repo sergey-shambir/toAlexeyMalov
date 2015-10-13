@@ -3,7 +3,7 @@ include(../union/union.pri)
 
 TEMPLATE = app
 CONFIG -= qt
-LIBS += -lSDL_image
+TARGET = $$redirectOutput($$TARGET)
 
 SOURCES += main.cpp \
     appdelegate.cpp \

@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <GL/glew.h>
 #include <AL/al.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "../helpers/OpenGLHelper.h"
 #include "../helpers/OpenALHelper.h"

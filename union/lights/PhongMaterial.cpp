@@ -1,7 +1,7 @@
 #include "PhongMaterial.h"
 
 #include <GL/glew.h> // to install material in fixed pipeline
-#include <assimp/aiTypes.h> // to convert aiColor3D in vec4
+#include <assimp/types.h> // to convert aiColor3D in vec4
 
 namespace GL {
 

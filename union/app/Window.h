@@ -26,8 +26,11 @@ public:
     void onDisplay(WindowAction const& action);
 
     /* команды */
+    void warpMouse(int x, int y) const;
     void setTitle(const char *title);
     void redisplay();
+    void swapBuffers();
+    void createWindow();
     //! При вызове выходит из полноэкранного режима
     void resize(uint16_t width, uint16_t height);
     void toggleFullscreen(bool enterFullscreen);

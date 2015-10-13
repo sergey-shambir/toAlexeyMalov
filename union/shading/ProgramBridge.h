@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <boost/noncopyable.hpp>
 #include "../math/math"
 
 namespace GL {
@@ -12,7 +11,7 @@ class TexturedMaterial;
  * @class GL::ProgramBridge provides a way to load libunion classes as uniforms
  * See methods documentation in cpp file
  */
-class ProgramBridge : public boost::noncopyable
+class ProgramBridge
 {
     const Program &m_program;
 public:
@@ -31,6 +30,11 @@ public:
     void loadMat3(const mat3 &value, const std::string& name);
     void loadFloat(float value, const std::string& name);
     void loadInt(int value, const std::string& name);
+
+private:
+    ProgramBridge() = delete;
+    ProgramBridge(const ProgramBridge &bridge) = delete;
+    void operator =(const ProgramBridge &other) = delete;
 };
 
 } // namespace GL

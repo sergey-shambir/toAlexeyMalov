@@ -16,9 +16,10 @@
 #include <stdio.h>
 
 // assimp will be used for import model
-#include <assimp/aiScene.h>
-#include <assimp/assimp.hpp>
-#include <assimp/aiPostProcess.h>
+#include <assimp/scene.h>
+#include <assimp/types.h>
+#include <assimp/postprocess.h>
+#include <assimp/Importer.hpp>
 
 #include <GL/glew.h>
 
@@ -70,7 +71,7 @@ GL::BoundingBox getBoundingBoxForNode(const aiScene& scene,
         unsigned indexOnScene = node.mMeshes[mi];
         const aiMesh* mesh = scene.mMeshes[indexOnScene];
         for (unsigned vi = 0; vi < mesh->mNumVertices; ++vi) {
-            struct aiVector3D vertex = mesh->mVertices[vi];
+            aiVector3D vertex = mesh->mVertices[vi];
             fixMinBound(vertex, min);
             fixMaxBound(vertex, max);
         }

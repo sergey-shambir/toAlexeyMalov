@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include <stdexcept>
 
-const char MODEL_TANK_PHOENIX_PATH[] = "lab7scene/phoenix_ugv.md2";
+const char MODEL_TANK_PHOENIX_PATH[] = "../../Data/lab7scene/phoenix_ugv.md2";
 
 class Lab9FilterAppData
 {

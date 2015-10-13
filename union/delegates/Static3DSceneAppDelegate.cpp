@@ -36,7 +36,7 @@ void Static3DSceneAppDelegate::didInitialized(const Window &window)
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
     createCamera(window);
-    d->m_cameraCtl.reset(new EyeCameraInputController(*(d->m_camera), d->m_options.cameraSpeed));
+    d->m_cameraCtl.reset(new EyeCameraInputController(window, *(d->m_camera), d->m_options.cameraSpeed));
 
     d->m_camera->loadLookAtRH(vec3d(4, 4, 0.5),
                               vec3d(0, 0, 0),

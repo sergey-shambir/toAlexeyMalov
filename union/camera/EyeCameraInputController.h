@@ -6,10 +6,12 @@
 
 #include <set>
 
+class Window;
+
 class EyeCameraInputController : public IInputController
 {
 public:
-    EyeCameraInputController(GL::IFirstPersonCamera &reference, float cameraSpeed);
+    EyeCameraInputController(const Window &window, GL::IFirstPersonCamera &reference, float cameraSpeed);
 
     void pressedKey(const KeyboardEvent &);
     void releasedKey(const KeyboardEvent &);
@@ -19,9 +21,22 @@ public:
 
 private:
     void safeWarpMouse();
+    void updateCameraSpeed();
 
+    const Window &m_window;
     GL::IFirstPersonCamera &m_cameraRef;
     float m_cameraSpeed;
+    struct MoveState
+    {
+        bool keyW = false;
+        bool keyA = false;
+        bool keyS = false;
+        bool keyD = false;
+        bool left = false;
+        bool right = false;
+        bool forward = false;
+        bool backward = false;
+    } m_moveState;
 
     /**
      * Pairs of coordinates that emitted by warping mouse to center,
