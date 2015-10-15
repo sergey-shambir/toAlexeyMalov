@@ -9,7 +9,7 @@ LIBS *= -lSDL2 -lSDL2_image -lassimp
 
 QT       -= core gui
 
-TARGET = $$redirectOutput($$TARGET)
+TARGET = $$redirectOutput(union)
 TEMPLATE = lib
 
 DEFINES += UNION_LIBRARY

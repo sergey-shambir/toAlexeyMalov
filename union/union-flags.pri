@@ -21,11 +21,15 @@ QMAKE_CXXFLAGS += -std=c++0x -Wall -Wextra
 
 defineReplace(redirectOutput) {
     target_dir = $$PWD
-    debug {
-        target_dir = ../$$relative_path($$PWD/../win32-mingw/release/$$1, $$OUT_PWD)
-    }
-    release {
-        target_dir = ../$$relative_path($$PWD/../win32-mingw/debug/$$1, $$OUT_PWD)
+    win32 {
+        debug {
+            target_dir = ../$$relative_path($$PWD/../win32-mingw/release/$$1, $$OUT_PWD)
+        }
+        release {
+            target_dir = ../$$relative_path($$PWD/../win32-mingw/debug/$$1, $$OUT_PWD)
+        }
+    } else {
+        target_dir = $$relative_path($$PWD/../unix-gcc/$$1, $$OUT_PWD)
     }
     return($$target_dir)
 }

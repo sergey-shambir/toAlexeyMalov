@@ -14,8 +14,6 @@
 #include <AL/alc.h>
 #include <stdio.h>
 
-static const char WORKDIR[] = "../../toAlexeyMalov/Data/";
-
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace {
@@ -93,14 +91,6 @@ App::~App()
 
 void App::exec(int argc, char *argv[])
 {
-#if defined(_WIN32)
-#else
-    if (0 != chdir(WORKDIR)) {
-        printf("Cannot goto directory %s, where placed all data files\n", WORKDIR);
-        exit(1);
-    }
-#endif
-
     if (initLibs(argc, argv))
     {
         initGLContext();
