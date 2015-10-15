@@ -5,8 +5,6 @@ TEMPLATE = app
 CONFIG -= qt
 TARGET = $$redirectOutput($$TARGET)
 
-INSTALLS += run.sh
-
 SOURCES += main.cpp \
     AppDelegate.cpp
 
@@ -15,7 +13,6 @@ HEADERS += \
     AppDelegate.h
 
 OTHER_FILES += \
-    run.sh \
     GLSL/pipeline.vert \
     GLSL/pipeline.frag
 

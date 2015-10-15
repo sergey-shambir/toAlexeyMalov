@@ -119,13 +119,16 @@ void EyeCameraInputController::updateCameraSpeed()
 {
     vec3d speed(0, 0, 0);
     if (m_moveState.forward || m_moveState.keyW) {
-        speed.x = +m_cameraSpeed;
-    } else if (m_moveState.backward || m_moveState.keyS) {
-        speed.x = -m_cameraSpeed;
-    } else if (m_moveState.left || m_moveState.keyA) {
-        speed.y = +m_cameraSpeed;
-    } else if (m_moveState.right || m_moveState.keyD) {
-        speed.y = -m_cameraSpeed;
+        speed.x += m_cameraSpeed;
+    }
+    if (m_moveState.backward || m_moveState.keyS) {
+        speed.x -= m_cameraSpeed;
+    }
+    if (m_moveState.left || m_moveState.keyA) {
+        speed.y += m_cameraSpeed;
+    }
+    if (m_moveState.right || m_moveState.keyD) {
+        speed.y -= m_cameraSpeed;
     }
     m_cameraRef.setSpeed(speed);
 }

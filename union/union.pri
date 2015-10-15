@@ -5,14 +5,14 @@ INCLUDEPATH += $$PWD
 
 win32 {
     LIBS *= -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lassimp
-    debug {
-        LIBS *= -L$$OUT_PWD/../union/debug -lunion
-    } else {
-        LIBS *= -L$$OUT_PWD/../union/release -lunion
-    }
 } else {
     LIBS *= -lSDL2 -lSDL2_image -lassimp
-    LIBS *= -L../union -lunion
+}
+
+LIBS *= -lunion
+
+unix:!macx {
+    QMAKE_LFLAGS += '-Wl,-rpath,\'\$$ORIGIN\',-z,origin'
 }
 
 CONFIG += precompile_header
